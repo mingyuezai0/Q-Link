@@ -1,0 +1,19 @@
+# 统一换行符，避免 Windows 上反复出现 LF/CRLF 警告
+* text=auto eol=lf
+
+# 这些是二进制，不要做换行转换
+*.png binary
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.exe binary
+*.zip binary
+
+# GitHub 语言统计：把生成物排除掉，别让它们盖过真实源码
+public/console.html linguist-generated=true
+package-lock.json linguist-generated=true
+
+*.bat text eol=crlf
+*.command text eol=lf

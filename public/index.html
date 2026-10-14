@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Q-Link · QQ 机器人控制台</title>
+<!--FAVICON-->
+<link rel="stylesheet" href="/css/app.css" />
+<script>
+  // 在首次绘制前定好主题，避免开屏动画闪一下白。
+  // 优先级：地址栏 ?theme=dark|light  >  上次的选择
+  try {
+    var q = new URLSearchParams(location.search).get('theme');
+    var t = q === 'dark' || q === 'light' ? q : localStorage.getItem('qlink-theme');
+    if (q === 'dark' || q === 'light') localStorage.setItem('qlink-theme', q);
+    if (t === 'dark') document.documentElement.dataset.theme = 'dark';
+  } catch (e) {}
+</script>
+</head>
+<body>
+  <!-- 开屏动画：心跳线自绘 + 名称浮现，配色跟随主题 -->
+  <div class="splash" id="splash">
+    <div class="splash-inner">
+      <svg class="splash-mark" viewBox="0 0 32 32" width="88" height="88" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="url(#qlGrad)" />
+        <path class="splash-pulse"
+              d="M3.5 15.2H9.2L11.8 9.8L15.1 20.6L17.2 13.6L19.2 15.2H28.5"
+              fill="none" stroke="#fff" stroke-width="2.3"
+              stroke-linecap="round" stroke-linejoin="round" />
+        <text class="splash-word" x="16" y="28.2" text-anchor="middle"
+              font-family="'Segoe UI','Helvetica Neue',Arial,system-ui,sans-serif"
+              font-size="8.6" font-weight="700" fill="#fff">Link</text>
+      </svg>
+      <div class="splash-name">Q-Link</div>
+      <div class="splash-tag">QQ 机器人控制台</div>
+      <div class="splash-bar"><i></i></div>
+    </div>
+  </div>
+
+  <!-- 图标渐变只定义一次，顶栏标识与侧边栏共用 -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="qlGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#3FC7FF"/>
+        <stop offset="1" stop-color="#0084E8"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div id="app" class="app">
+
+    <!-- 顶栏：品牌 + 连接状态 + 主控开关 -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <!-- Q-Link 标识：一道心跳线 + Link 字样（自绘图形，未使用任何官方素材） -->
+          <svg viewBox="0 0 32 32" width="34" height="34" id="qlink-logo">
+            <rect width="32" height="32" rx="8" fill="url(#qlGrad)"/>
+            <path d="M3.5 15.2H9.2L11.8 9.8L15.1 20.6L17.2 13.6L19.2 15.2H28.5"
+                  fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="16" y="28.2" text-anchor="middle"
+                  font-family="'Segoe UI','Helvetica Neue',Arial,system-ui,sans-serif"
+                  font-size="8.6" font-weight="700" fill="#fff" letter-spacing="-0.15">Link</text>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <b>Q-Link</b>
+          <i>QQ BOT CONSOLE</i>
+        </span>
+      </div>
+
+      <div class="topbar-center">
+        <button class="status-pill" id="statusPill" type="button" title="查看接入状态">
+          <span class="dot" id="statusDot"></span>
+          <span id="statusText">未连接</span>
+          <span class="env-tag" id="envTag" hidden>沙箱</span>
+        </button>
+      </div>
+
+      <div class="topbar-right">
+        <button class="btn btn-ghost btn-sm" id="btnTheme" type="button" title="切换黑夜 / 白天模式"></button>
+        <button class="btn btn-ghost btn-sm" id="btnRestart" type="button" title="重启连接">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M13.5 8a5.5 5.5 0 1 1-1.7-3.97"/><path d="M13.6 2.4v3.4h-3.4"/></svg>
+          重启连接
+        </button>
+        <button class="btn btn-primary btn-sm" id="btnToggle" type="button">启动机器人</button>
+      </div>
+    </header>
+
+    <div class="body">
+      <!-- 侧边导航 + 底部当前机器人 -->
+      <nav class="sidebar" id="sidebar" aria-label="主导航"></nav>
+
+      <!-- 内容区 -->
+      <main class="main" id="main" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <div class="modal-layer" id="modalLayer" hidden></div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

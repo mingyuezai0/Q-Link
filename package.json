@@ -1,0 +1,70 @@
+{
+  "name": "q-link",
+  "version": "0.1.2",
+  "private": true,
+  "description": "Q-Link — QQ 机器人控制台：接入、人设、记忆、关键词、名单表、违禁词、表情包、梗知识",
+  "author": "Q-Link",
+  "type": "module",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "desktop": "node desktop/launch.mjs",
+    "build": "node build.mjs",
+    "build:watch": "node build.mjs --watch",
+    "test": "node test/engine.mjs && node test/e2e.mjs",
+    "test:engine": "node test/engine.mjs",
+    "test:e2e": "node test/e2e.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@tencent-connect/qqbot-connector": "^1.2.0",
+    "express": "^4.21.2",
+    "qrcode": "^1.5.4",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  },
+  "build": {
+    "appId": "com.qlink.console",
+    "productName": "Q-Link",
+    "directories": {
+      "output": "dist",
+      "buildResources": "desktop/build"
+    },
+    "files": [
+      "server/**/*",
+      "public/**/*",
+      "desktop/**/*",
+      "build.mjs",
+      "package.json",
+      "!**/__*",
+      "!dist/**/*"
+    ],
+    "extraMetadata": {
+      "main": "desktop/main.cjs"
+    },
+    "win": {
+      "icon": "desktop/build/icon.png",
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Q-Link",
+      "artifactName": "Q-Link-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "Q-Link-Portable-${version}.${ext}"
+    }
+  }
+}
