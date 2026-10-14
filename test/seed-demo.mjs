@@ -32,9 +32,9 @@ fs.writeFileSync(
       meta: {
         default: {
           id: 'default',
-          name: '星屑',
+          name: '演示机器人',
           avatar: '',
-          appId: '1905788965',
+          appId: '1234567890',
           source: 'qr',
           createdAt: now - 604800000,
           lastUsedAt: now,
@@ -110,6 +110,6 @@ write('keywords.json', [
   { id: 'k2', trigger: '规则', matchType: 'contains', mode: 'ai', reply: '用三条以内的短句回答，不要用列表', priority: 1, enabled: true, source: 'manual', hits: 0 },
 ]);
 
-write('config.json', { appId: '1905788965', appSecret: 'demo-only', intents: 100663296, baseUrl: 'http://127.0.0.1:1' });
+write('config.json', { appId: '1234567890', appSecret: 'MOCK_DEMO_SECRET', intents: 100663296, baseUrl: 'http://127.0.0.1:1' });
 
 console.log('演示数据已写入', bot);

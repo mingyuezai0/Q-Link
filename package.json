@@ -12,6 +12,8 @@
     "desktop": "node desktop/launch.mjs",
     "build": "node build.mjs",
     "build:watch": "node build.mjs --watch",
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "pack": "node desktop/pack.mjs",
     "test": "node test/engine.mjs && node test/e2e.mjs",
     "test:engine": "node test/engine.mjs",
     "test:e2e": "node test/e2e.mjs"
@@ -42,6 +44,7 @@
       "build.mjs",
       "package.json",
       "!**/__*",
+      "!desktop/_*",
       "!dist/**/*"
     ],
     "extraMetadata": {
